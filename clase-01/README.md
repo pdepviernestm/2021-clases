@@ -1,92 +1,65 @@
-# TP-0 de Funcional
+# Clase 1 - Introducción a la materia
 
-Hola!,
-la idea de este trabajo práctico es ganar un poco de tiempo instalando lo que vamos a usar durante la primera parte de la materia.
+## Material de la clase
 
-## ¿Qué hay que instalar?
+- Clase grabada: https://www.youtube.com/watch?v=ul76Bnpo4ow
+- Slides: https://docs.google.com/presentation/d/1c1IIJx-HQz4Y_5F2_oPSKIT4WKG7swTqfA8tS5PlBrw/edit?usp=sharing
+- Código: Acá mismo :D.
 
-### Git
+## Resumen
 
-git es una herramienta que vamos a usar a lo largo de toda la materia en los 3 paradigmas que vamos a ver.
-En una de las primeras clases les vamos a explicar mejor para qué sirve y cómo lo vamos a usar.
-Por ahora, lo que necesitan saber sobre git es que lo van a usar para bajarse los trabajos prácticos y luego subirlos a medida que los van resolviendo.
+En esta clase nos presentamos y hablamos un poco de cómo vamos a ir llevando la materia:
+- Las clases van a ser de 9:15 a 12:30.
+- Va a haber TPs cortos casi todas las clases para hacer en grupos de 3, que se pueden empezar en clase y se tienen que terminar para la clase siguiente.
+- Va a haber un TP integrador y un parcial por cada paradigma.
 
-Link para descargar Git: https://git-scm.com/downloads
+También hablamos un poco sobre los comienzos de la programación con Ada Lovelace y Charles Babbage, sobre que es un programa y un paradigma y sobre declaratividad (concentrarse en el qué y no el cómo) y expresividad (escribir el el código de manera que sea fácil de entender).
 
-Si lo descargan en windows, asegurense de marcar Git Bash en lo que instalan, eso es para usarlo desde la consola.
+## Para la clase que viene
 
-Git se puede usar por línea de comandos o con una interfaz gráfica. En este primer ejercicio vamos a mostrar como usarlo por línea de comandos.
+- Armar grupos de 3 (podés hacerlo por discord en el channel `#buscando-grupo`) y mandarme integrantes y nombre del grupo a mi mail o por discord.
+- Preparar el ambiente como dice en el TP-0:
+https://classroom.github.com/a/Ou0-tXaH
 
-### Stack
+## ¿Qué mas puedo leer, ver o practicar?
 
-Stack lo vamos a usar durante el paradigma funcional para trabajar con Haskell.
-Haskell es el lenguaje de programación en el que vamos a programar, y stack es una herramienta para gestionar proyectos en Haskell.
+Si te quedaste con ganas de seguir estudiando lo que vimos o si queres volver a ver algún concepto que no quedó del todo claro durante la clase, podés revisar este material:
 
-Link para descargar Stack, explicado para diferentes sistemas operativos: https://docs.haskellstack.org/en/stable/README/#how-to-install
+### Wiki de uqbar
 
-Si tienen algún problema usando Stack, revisen si es alguno de los mencionados acá, si no manden un mail pidiendo ayuda
-https://github.com/pdep-utn/enunciados-miercoles-noche/blob/master/pages/haskell/troubleshooting.md
+Uqbar es una fundación formada por docentes de esta y otras universidades. Tiene [una wiki](http://wiki.uqbar.org/wiki/articles/expresividad.html) donde van a poder encontrar explicaciones de muchos conceptos que vemos en la materia. Por ejemplo, de lo visto de esta clase pueden leer sobre: 
+- [Expresividad](http://wiki.uqbar.org/wiki/articles/expresividad.html)
+- [Abstracción](http://wiki.uqbar.org/wiki/articles/abstraccion.html)
+- [Declaratividad](http://wiki.uqbar.org/wiki/articles/declaratividad.html)
 
-### Editor de texto
+### Mumuki
 
-Lo que vamos a usar para literalmente escribir el código, para Haskell hay varias alternativas, nosotros recomendamos Visual Studio Code.
+Mumuki es una plataforma para aprender prácticando donde pueden practicar en el navegador. Tiene guías para los 3 paradigmas que vamos a ver este año con ejercicios que se corrigen automáticamente.
+Van a necesitar un link para registrarse que les voy a pasar por discord, y acá tienen un link a un vídeo explicando como crearse una cuenta:
 
-Dejo un link a una guía ya escrita para otro curso que está muy bien explicada: https://github.com/pdep-utn/enunciados-miercoles-noche/blob/master/pages/haskell/entorno.md#editor-de-texto
+[![Como crearse una cuenta en Mumuki](https://img.youtube.com/vi/hxzJZaay04U/0.jpg)](https://www.youtube.com/watch?v=hxzJZaay04U "Como crearse una cuenta en Mumuki")
 
-Si van a usar Visual Studio Code asegurense de instalar el plugin `Haskell` (https://marketplace.visualstudio.com/items?itemName=haskell.haskell), va a hacer que sea mucho más feliz programar en el lenguaje.
+### Videos de otros años/cursos
+[Acá](https://www.pdep.com.ar/material/videos) pueden encontrar un montón de vídeos hechos desde el año pasado sobre temas de la materia.
 
-## Ya descargué todo, ¿y ahora qué?
+En particular para esta clase, si quieren pueden ver la primera clase armada para el 2020 que la hicimos Maiu (profe de los miércoles a la tarde), Feche y yo (Juan). Es bastante parecida a la clase que tuvimos nosotros porque reusamos bastante de las slides, pero igual se las dejo:
+[![Introducción a PdeP 2020](https://img.youtube.com/vi/NrgosnyOWNU/0.jpg)](https://youtu.be/NrgosnyOWNU "Introducción a PdeP 2020")
 
-Todavía nos falta instalar Haskell mismo, y vamos a usar Stack para eso.
+## Material extra sobre lo visto en clase
 
-1. El primer paso ahora es bajarse este repositorio. Para eso debemos copiar el link que nos muestra al hacer click en `Clone or download`
+Esto ya son curiosidades/material que no va a entrar en los examenes o tps pero que me pareció interesante como para compartirselos:
 
-![Clickeando en Clone or Download, muestra el link de descarga](https://i.imgur.com/oqv4XFW.gif)
+- La publicación sobre la máquina analítica con las notas de Ada: [Sketch of the Analytical Engine invented by Charles Babbage](https://www.fourmilab.ch/babbage/sketch.html)
 
-2. Abrimos la consola de git, para eso, buscamos el programa Git Bash que debería haberse instalado.
-Cuando estan usando la consola, siempre están ubicados en alguna carpeta. Lo más probable es que la carpeta en la que estén por defecto sea la misma que cuando en el explorador de Windows adentro tiene las carpetas de Escritorio, Descargas, Documentos, etc.
-Para chequear eso pueden usar uno de estos dos comandos que sirven para ver que hay en una carpeta: `dir` o `ls`.
-(ignoren que el usuario se llama Garbarino)
-![Captura de pantalla de Git Bash](https://i.imgur.com/zqQLjuO.png)
+- Un vídeo explicando el funcionamiento de la máquina diferencial 2 y que llevó a Babbage a diseñarlo: [![Charles Babbage and Difference Enginge No. 2](https://img.youtube.com/vi/7K5p_tBcrd0/0.jpg)](https://youtu.be/7K5p_tBcrd0 "Charles Babbage and Difference Enginge No. 2")
 
-3. Usando la consola, nos movemos hacia la carpeta en la cual queremos descargar el ejercicio usando el comando `cd`.*
+- La máquina diferencial 2 construida y andando:
+[![False Dawn: The Babbage Engine](https://img.youtube.com/vi/XSkGY6LchJs/0.jpg)](https://youtu.be/XSkGY6LchJs "False Dawn: The Babbage Engine")
 
-4. Clonar el repositorio a nuestra compu, para eso vamos a ejecutar:
-`git clone linkQueCopiaronEnElPaso1`. Esto debería crearles una carpeta con el nombre del repositorio en su computadora.
+- Como funcionaría la máquina analítica
+[![La máquina analítica](https://img.youtube.com/vi/5rtKoKFGFSM/0.jpg)](https://youtu.be/5rtKoKFGFSM "La máquina analítica")
 
-5. Nos movemos a la carpeta del repositorio: `cd nombreDelRepositorio`.
+- Unos ensayos en español sobre las contribuciones de Ada, en el tercero hay una explicación del programa escrito en las notas: [La maga y la inquietud: reflexiones sobre el trabajo de Ada Lovelace](https://colectivodisonancia.net/wp-content/uploads/2021/04/La-Maga-y-la-Inquietud_online.pdf)
 
-6. Y en este paso, le pedimos a stack que compile el proyecto con `stack build`.
-Este paso va a tardar un rato.
-Como aun no tenemos Haskell instalado, en este paso Stack va a descargar la versión de Haskell que esté especificada en el proyecto. Como en todos los ejercicios vamos a usar la misma versión, es la única vez que va a pasar esto.
-
-7. Una vez que terminó de descargarse e instalarse todo en el paso interior, vamos a correr los tests para garantizar que todo haya salido bien: `stack test`.
-  
-   Si ves este mensaje significa que todo ya está instalado y andando:
-   ```
-   Test de ejemplo
-   El doble de un número es el número más si mismo
-   ```
-
-8. Abrir el proyecto con Visual Studio Code y validar que el plugin `Haskell` se haya instalado correctamente:
-Desde visual studio code, abren la carpeta del ejercicio y van a `src/Library.hs`, si poniendo el cursor sobre "numero" les aparece un cartel que dice `Number`, significa que el plugin está funcionando :D.
-
-9. Si llegaste hasta acá, ¡bien!, ya tenes todo instalado correctamente, manda un mail al docente avisando así nos enteramos cuantos pudieron instalar las cosas sin problemas.
-
-A partir de acá, si querés jugar un poco con Haskell podés:
-
-- Abrir el interprete para probar cosas corriendo este comando (estando ubicado en la carpeta del proyecto): `stack ghci`
-
-- Escribir nuevo código en `src/Library.hs` y probarlo con tests que se escriben en `src/Spec.hs`
-
-## Nota: ¿Por qué estamos usando Stack? ¿Qué es `import PdePreludat`?
-
-Estamos usando Stack porque permite hacer algunas cosas que serían más difíciles de hacer con Haskell "pelado" como por ejemplo:
-- Asegurarse que todos estemos trabajando con la misma versión de Haskell.
-- Instalar dependencias (como el PdePreludat).
-- Correr los tests.
-
-PdePreludat es una librería que estamos usando en algunos cursos en vez de la librería estandar que usa Haskell por defecto (la cual se llama Prelude). Idealmente simplifica algunas cosas que no son necesarias a la materia y mejora algunos mensajes de error que les pueden aparecer en Haskell. El `import PdePreludat` lo necesitamos para poder usar un montón de funciones que vamos a usar en la materia (como la función suma `(+)` que aparece en este ejercicio).
-
-
-Para leer más sobre esto: https://github.com/10Pines/pdepreludat
+- También existe una novela gráfica de ficción basada en la vida de Ada Lovelace y Charles Babbage que está divertida `:P`. Lamentablemente de esto no les puedo pasar link porque no está gratis.
+![The thrilling adventures of Lovelace and Babbage](https://images-na.ssl-images-amazon.com/images/I/91Al-vESJEL.jpg)
