@@ -51,15 +51,20 @@ Esto ya son curiosidades/material que no va a entrar en los examenes o tps pero 
 
 - La publicación sobre la máquina analítica con las notas de Ada: [Sketch of the Analytical Engine invented by Charles Babbage](https://www.fourmilab.ch/babbage/sketch.html)
 
-- Un vídeo explicando el funcionamiento de la máquina diferencial 2 y que llevó a Babbage a diseñarlo: [![Charles Babbage and Difference Enginge No. 2](https://img.youtube.com/vi/7K5p_tBcrd0/0.jpg)](https://youtu.be/7K5p_tBcrd0 "Charles Babbage and Difference Enginge No. 2")
+- Un vídeo explicando el funcionamiento de la máquina diferencial 2 y que llevó a Babbage a diseñarlo:
+
+[![Charles Babbage and Difference Enginge No. 2](https://img.youtube.com/vi/7K5p_tBcrd0/0.jpg)](https://youtu.be/7K5p_tBcrd0 "Charles Babbage and Difference Enginge No. 2")
 
 - La máquina diferencial 2 construida y andando:
+
 [![False Dawn: The Babbage Engine](https://img.youtube.com/vi/XSkGY6LchJs/0.jpg)](https://youtu.be/XSkGY6LchJs "False Dawn: The Babbage Engine")
 
 - Como funcionaría la máquina analítica
+
 [![La máquina analítica](https://img.youtube.com/vi/5rtKoKFGFSM/0.jpg)](https://youtu.be/5rtKoKFGFSM "La máquina analítica")
 
 - Unos ensayos en español sobre las contribuciones de Ada, en el tercero hay una explicación del programa escrito en las notas: [La maga y la inquietud: reflexiones sobre el trabajo de Ada Lovelace](https://colectivodisonancia.net/wp-content/uploads/2021/04/La-Maga-y-la-Inquietud_online.pdf)
 
 - También existe una novela gráfica de ficción basada en la vida de Ada Lovelace y Charles Babbage que está divertida `:P`. Lamentablemente de esto no les puedo pasar link porque no está gratis.
+
 ![The thrilling adventures of Lovelace and Babbage](https://images-na.ssl-images-amazon.com/images/I/91Al-vESJEL.jpg)
