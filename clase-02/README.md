@@ -19,6 +19,8 @@ _**Proximamente**_
 
 ### Práctica de Mumuki
 
+Si no podés entrar a las guías puede ser porque aún no te inscribiste al curso en mumuki. Para eso, hace click [acá](https://mumuki.io/pdep-utn/join/WCFC_Q)
+
 Con lo que vimos hasta ahora, pueden hacer las siguientes guías:
 - [Lección 1: Valores y Funciones.](https://mumuki.io/pdep-utn/lessons/688-programacion-funcional-valores-y-funciones)
 - [Lección 2: Práctica valores y funciones](https://mumuki.io/pdep-utn/lessons/689-programacion-funcional-practica-valores-y-funciones)
