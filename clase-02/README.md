@@ -39,4 +39,4 @@ Con lo que vimos hasta ahora, pueden hacer las siguientes guías:
 
 - Guardas, por Alf y El Rasta, 5'
 
-[!Guardas](https://img.youtube.com/vi/qv5RuZl5iCo/0.jpg)](https://youtu.be/qv5RuZl5iCo "Guardas")
+[![Guardas](https://img.youtube.com/vi/qv5RuZl5iCo/0.jpg)](https://youtu.be/qv5RuZl5iCo "Guardas")
