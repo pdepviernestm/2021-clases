@@ -6,10 +6,6 @@
 - Slides: https://docs.google.com/presentation/d/1KhufAzlT-1C-ynmg8LDGBF9BY4MKGWIk253Is91lgOE/edit?usp=sharing
 - Código: Acá mismo :D.
 
-## Resumen
-
-_**Proximamente**_
-
 ## Para la clase que viene
 
 - Armar grupos de 3 y mandarme integrantes y nombre del grupo a mi mail o por discord!

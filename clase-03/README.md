@@ -6,10 +6,6 @@
 - Slides: https://docs.google.com/presentation/d/1Bioo3zf-COhD7Cp6ChDcfdWEDgJxYgvRRfCu7OBX6Io/edit?usp=sharing
 - Código: Acá mismo :D.
 
-## Resumen
-
-_**Proximamente**_
-
 ## Para la clase que viene
 
 - Hacer el [TP-2](https://classroom.github.com/g/2KxkF6U-)
