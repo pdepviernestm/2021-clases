@@ -43,3 +43,30 @@ primeras n cartas = implementame
 -- >>> cartasAColores unasCartas
 -- [Azul, Azul, Verde]
 cartasAColores cartas = implementame
+
+-- Ejemplos en clase con listas
+
+mazoConUnaSolaCarta :: [Carta]
+mazoConUnaSolaCarta = [CartaNumerica 5 Rojo]
+
+esListaVacia :: Eq a => [a] -> Bool
+esListaVacia xs = xs == [] 
+
+esListaVacia' :: [a] -> Bool
+esListaVacia' [] = True
+esListaVacia' _ = False
+
+esListaCon1SoloElemento :: [a] -> Bool
+esListaCon1SoloElemento (x : []) = True
+esListaCon1SoloElemento _ = False
+
+esListaCon1SoloElemento' :: [a] -> Bool
+esListaCon1SoloElemento' [x] = True
+esListaCon1SoloElemento' _ = False
+
+esListaCon1SoloElemento'' :: Eq a => [a] -> Bool
+esListaCon1SoloElemento'' lista = lista /= [] && tail lista == []
+
+esListaCon1SoloElemento''' :: Eq a => [a] -> Bool
+esListaCon1SoloElemento''' [] = False
+esListaCon1SoloElemento''' lista = tail lista == []
