@@ -32,17 +32,50 @@ otrasCartas = CartaNumerica 3 Rojo : CartaNumerica 9 Verde : CartaNumerica 0 Azu
 
 -- >>> ultimaCarta unasCartas
 -- CartaNumerica 1 Verde
-ultimaCarta = implementame
+ultimaCarta :: [Carta] -> Carta
+ultimaCarta [x] = x
+ultimaCarta (_ : elResto) = ultimaCarta elResto
+
+-- ultimaCarta [unoRojo, dosVerde, tresAzul]
+-- ultimaCarta [dosVerde, tresAzul]
+-- ultimaCarta [tresAzul]
+-- tresAzul
 
 -- >>> primeras 1 unasCartas
 -- [CartaNumerica 0 Azul]
 -- >>> primeras 2 unasCartas
 -- [CartaNumerica 0 Azul, CartaNumerica 1 Azul]
-primeras n cartas = implementame
+primeras :: Number -> [Carta] -> [Carta]
+primeras 0 _ = []
+primeras n (x:xs) = x : primeras (n-1) xs
+
+primeras' :: Number -> [Carta] -> [Carta]
+primeras' n lista
+    | n == 0 = []
+    | otherwise = head lista : primeras (n-1) (tail lista)
+-- primeras 2 [unoRojo, dosVerde, tresAzul]
+-- unoRojo : primeras 1 [dosVerde, tresAzul]
+-- unoRojo : dosVerde : primeras 0 [tresAzul]
+-- unoRojo : dosVerde : []
+-- [unoRojo, dosVerde]
 
 -- >>> cartasAColores unasCartas
 -- [Azul, Azul, Verde]
-cartasAColores cartas = implementame
+cartasAColores :: [Carta]->[Color]
+cartasAColores [] = []
+cartasAColores lista = color (head lista) : cartasAColores (tail lista)
+
+cartasAColores' :: [Carta]->[Color]
+cartasAColores' [] = []
+cartasAColores' (primeraCarta : resto) = color primeraCarta : cartasAColores' resto
+
+-- cartasAColores [unoAzul, dosAzul, tresVerde]
+-- color unoAzul : cartasAColores [dosAzul, tresVerde]
+-- color unoAzul : color dosAzul : cartasAColores [tresVerde]
+-- color unoAzul : color dosAzul : color tresVerde : cartasAColores []
+-- color unoAzul : color dosAzul : color tresVerde : []
+-- Azul : Azul : Verde : []
+-- [Azul, Azul, Verde]
 
 -- Ejemplos en clase con listas
 
