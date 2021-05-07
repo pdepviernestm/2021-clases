@@ -44,7 +44,10 @@ correrTests = hspec $ do
         cumpleTodas [even] 5 `shouldBe` False
       it "si le paso unas condiciones y un valor, y el valor cumple todas las condiciones, da True" $ do
         cumpleTodas [odd, (\n -> n < 10)] 5 `shouldBe` True
-        
+    describe "aplicarDosVeces" $ do        
+      let sumarDos n = n + 2 
+      it "si le paso un valor, y una funcion, aplica 2 veces seguidas la funcion" $ do
+        aplicarDosVeces sumarDos 3 `shouldBe` 7
 
 escribime :: Expectation
 escribime = implementame

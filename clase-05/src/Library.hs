@@ -38,7 +38,9 @@ esFigura _ = True
 -- [3,4,5]
 -- >>> aplicarDosVeces (\x -> x + 3) 5
 -- 11
-aplicarDosVeces = implementame
+aplicarDosVeces :: (a -> a) -> a -> a 
+aplicarDosVeces funcion valor = funcion (funcion valor)
+
 
 -- >>> aplicarEnOrden tail length [1,2,3,4,5]
 -- 4
