@@ -49,14 +49,17 @@ aplicarEnOrden = implementame
 -- >>> positivos [-1,2,-4,5]
 -- [2, 5]
 positivos :: [Number] -> [Number]
-positivos = implementame
+positivos numeros = filter esPositivo numeros
+
+esPositivo :: Number -> Bool
+esPositivo numero = numero > 0 
 
 -- >>> noHayNingunoMayorQue 5 [1,2,3]
 -- True
 -- >>> noHayNingunoMayorQue 2 [1,2,3]
 -- False
 noHayNingunoMayorQue :: Number -> [Number] -> Bool
-noHayNingunoMayorQue maximo = implementame
+noHayNingunoMayorQue maximo lista = all (\numero -> numero <= maximo) lista  
 
 -- >>> tieneEspacio "hola"
 -- False
@@ -68,19 +71,32 @@ tieneEspacio = implementame
 -- >>> sumatoria [1,2,3,4,5]
 -- 15
 sumatoria :: [Number] -> Number
-sumatoria numeros = implementame
+sumatoria numeros = foldl (+) 0 numeros
+-- foldl1 (+) [1,2,3]
+-- (1 + 2) + 3
+--
+-- foldl (+) 0 [1,2,3]
+-- ((0 + 1) + 2) + 3
 
 -- >>> concatenarTodas ["pero el ", "te", "ma to", "davia da", " para ", "mas"]
 -- "pero el tema todavia da para mas"
 concatenarTodas :: [String] -> String
-concatenarTodas strings = implementame
+concatenarTodas strings = foldl (++) "" strings
 
+concatenarConEspacios :: [String] -> String
+concatenarConEspacios strings =
+    foldl concatenarConEspacio "" strings
+
+concatenarConEspacio :: String -> String -> String
+concatenarConEspacio "" otroString = otroString
+concatenarConEspacio unString otroString = unString ++ " " ++ otroString
+
+-- 
 -- >>> cumpleTodas [esRoja, esFigura] (CartaEspecial Reversa Roja)
 -- True
 -- >>> cumpleTodas [(\carta -> esDeColor Verde carta), esFigura] (CartaEspecial Reversa Roja)
 -- False
 --
--- (es la funcion all)
---
 cumpleTodas :: [a -> Bool] -> a -> Bool
-cumpleTodas condiciones valor = implementame
+cumpleTodas condiciones valor =
+    all (\condicion -> condicion valor) condiciones
