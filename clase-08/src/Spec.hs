@@ -20,6 +20,8 @@ correrTests = hspec $ do
       replicar 3 "hola" `shouldBe` ["hola", "hola", "hola"]
     it "naturales deberia ser los enteros mayores a 0 en orden" $ do
       take 10 naturales `shouldBe` [1,2,3,4,5,6,7,8,9,10]
+    it "potenciasDe2 deberia ser todas las potencias de 2 en orden" $ do
+      take 10 potenciasDeDos `shouldBe` [1,2,4,8,16,32,64,128,256,512]
     it "losPares deberia ser los numeros pares en orden" $ do
       take 10 losPares `shouldBe` [2,4,6,8,10,12,14,16,18,20]
     it "serieDeFibonacci deberia ser los numeros de la serie de fibonacci" $ do
