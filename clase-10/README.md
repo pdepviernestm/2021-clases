@@ -39,3 +39,10 @@ TP-1: _**Proximamente**_
 
 - Mujeres en STEAM, ¿Quién es Verónica Dahl?
 [![Mujeres en STEAM - Veronica Dahl](https://img.youtube.com/vi/MNu4aFYjI_Y/0.jpg)](https://youtu.be/MNu4aFYjI_Y "Mujeres en STEAM - Veronica Dahl")
+
+## Recordatorio
+
+¡La Zurihac (conferencia internacional de Haskell) es la semana que viene!
+
+https://zfoh.ch/zurihac2021/
+
