@@ -12,7 +12,7 @@ https://github.com/pdep-utn/enunciados-miercoles-noche/blob/master/pages/prolog/
 
 ## ¿Que hay para la clase que viene?
 
-TP-1: _**Proximamente**_
+TP-1: https://classroom.github.com/g/4PhB8kqZ
 
 ## ¿Qué mas puedo leer, ver o practicar?
 
