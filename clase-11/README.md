@@ -3,12 +3,12 @@
 ## Material de la clase
 
 - Clase grabada: _**Proximamente**_
-- Slides: _**Proximamente**_
+- Slides: https://docs.google.com/presentation/d/1hEHbt16wEDX7KUVqcnizK7vF_S_8Y8QtyvdgAm7kgxM/edit?usp=sharing
 - Código: Acá :D.
 
 ## ¿Que hay para la clase que viene?
 
-TP-2: 
+TP-2: https://classroom.github.com/g/7iKfnvM2
 
 ## ¿Qué mas puedo leer, ver o practicar?
 
