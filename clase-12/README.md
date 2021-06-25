@@ -5,6 +5,7 @@
 - Clase grabada: _**Proximamente**_
 - Slides: https://docs.google.com/presentation/d/1zfzshMuJQiz48MOow6V-iGs79F3WjlGAEp4wG2NqoVg/edit?usp=sharing
 - Código: Acá :D.
+- Enunciado que usamos en clase para practicar: https://docs.google.com/document/d/12KmvUy8JmINbykXA-ilL0u7EY31L1d9a-vTiwHgWr2w/edit
 
 ## ¿Que hay para la clase que viene?
 
