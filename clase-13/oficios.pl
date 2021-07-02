@@ -1,7 +1,14 @@
+:- use_module(library(clpfd)).
+% ^ esto no es necesario que lo revisen o lo usen
+
 % maestro(migue,cocinero).
 % maestro(carla,alquimista).
 % aprendiz(feche,mecanico).
 % oficial(aye,alquimista).
+
+trabajador(gise, profesion(alquimista, maestro)).
+trabajador(gise, profesion(mecanico, maestro)).
+trabajador(gise, profesion(cocinero, maestro)).
 
 trabajador(lucas, profesion(alquimista, experto)).
 trabajador(juan, profesion(alquimista, aprendiz)).
@@ -20,11 +27,12 @@ mismoArea(profesion(Area, _), profesion(Area, _)).
                 % profesion(Area, UnaExperiencia)),
 %     trabajador(_,
                 % profesion(Area, OtraExperiencia)).
-
+tieneHerramienta(gise,llaveInglesa).
 tieneHerramienta(feche,llaveInglesa).
 tieneHerramienta(migue,ollaEssen).
 tieneHerramienta(carla, mechero).
 tieneHerramienta(aye, piedraFilosofal).
+tieneHerramienta(migue, piedraFilosofal).
 
 camaradas(Persona,OtraPersona):-
     % si le pasamos aye y carla
@@ -114,20 +122,55 @@ puedeHacer(Persona,recalentarComida):-
 puedeHacer(Persona, producirMedicina(Cantidad)) :-
     trabajador(Persona, profesion(alquimista, Experiencia)),
     not(masExperiencia(Experiencia, oficial)),
-    % es menor o igual a oficial => es oficial o aprendiz.
-    Cantidad =< 100, Cantidad >= 0.
+    between(0, 100, Cantidad).
 
 puedeHacer(Persona, producirMedicina(Cantidad)):-
     trabajador(Persona,profesion(alquimista,Experiencia)),
     masExperiencia(Experiencia,oficial),
-    Cantidad >= 0.
+    between(0, 100000, Cantidad).
+    % no es realmente correcto, lo hacemos asi
+    % solo para que nos quede inversible
 
-puedeHacer(Persona,repararAparato(Aparato,Herramienta)):-
+% así es inversible, pero esta usando cosas
+% que no les vamos a pedir en los tps o parcial:
+%
+% puedeHacer(Persona, producirMedicina(Cantidad)):-
+%     trabajador(Persona,profesion(alquimista,Experiencia)),
+%     masExperiencia(Experiencia,oficial),
+%     Cantidad #>= 0.
+
+puedeHacer(Persona,repararAparato(_, Herramienta)):-
     trabajador(Persona,profesion(mecanico,_)),
     tieneHerramienta(Persona,Herramienta).
 puedeHacer(migue,repararAparato(_,_)).
 
+puedeHacer(Persona,crearObraMaestra(Area)):-
+    trabajador(Persona,profesion(Area,maestro)).
 
+puedeHacer(Persona, crearObraMaestra(alquimista)) :-
+    tieneHerramienta(Persona, piedraFilosofal).
+
+puedeCubrir(QuienCubre, QuienEsCubierto, Tarea) :-
+    puedeHacer(QuienCubre, Tarea),
+    puedeHacer(QuienEsCubierto, Tarea),
+    QuienCubre \= QuienEsCubierto.
+
+% solucion con forall
+% esIrremplazable(Persona,Tarea):-
+%     puedeHacer(Persona,Tarea),
+%     forall(
+%         trabajador(OtraPersona, _),
+%         not(puedeCubrir(OtraPersona,Persona,Tarea))
+%         ).
+
+% solucion con not (son equivalentes)
+esIrremplazable(Persona,Tarea):-
+    puedeHacer(Persona,Tarea),
+    not(puedeCubrir(_, Persona, Tarea)).
+
+esComodin(Persona) :-
+    trabajador(Persona, _),
+    forall(puedeHacer(_, Tarea), puedeHacer(Persona, Tarea)).
 
 % si tuviesemos un predicado inversible esEntero\1
 % esEntero(Numero).
@@ -204,7 +247,7 @@ test(si_una_persona_es_alquimista_experta_o_mas_puede_hacer_cualquier_cantidad_d
     puedeHacer(carla, producirMedicina(80)),
     puedeHacer(carla, producirMedicina(200)).
 
-test(migue_puede_reparar_cualquier_aparato):-
+test(migue_puede_reparar_cualquier_aparato, nondet):-
     puedeHacer(migue, repararAparato(tele, destornillador)).
 
 test(una_persona_que_trabaja_en_mecanica_puede_arreglar_un_aparato_si_tiene_la_herramienta_necesaria, nondet):-
@@ -212,5 +255,45 @@ test(una_persona_que_trabaja_en_mecanica_puede_arreglar_un_aparato_si_tiene_la_h
 
 test(una_persona_no_puede_arreglar_un_aparato_aunque_tenga_la_herramienta_necesaria_si_no_es_mecanica):-
     not(puedeHacer(aye, repararAparato(radio, piedraFilosofal))).
+
+test(un_maestro_en_un_area_puede_realizar_la_tarea_de_crear_una_obra_maestra_de_ese_area, nondet):-
+    puedeHacer(migue, crearObraMaestra(cocinero)).
+
+test(una_persona_puede_crear_una_obra_maestra_de_alquimia_aun_sin_ser_maestro_si_es_que_tiene_una_piedra_filosofal, nondet):-
+    puedeHacer(aye, crearObraMaestra(alquimista)).
+
+test(una_persona_puede_crear_una_obra_maestra_de_alquimia_aun_sin_ser_maestro_o_alquimista_si_es_que_tiene_una_piedra_filosofal):-
+    puedeHacer(migue, crearObraMaestra(alquimista)).
+
+test(una_persona_no_puede_crear_una_obra_maestra_de_su_area_si_no_es_maestro):-
+    not(puedeHacer(feche, crearObraMaestra(mecanico))).
+
+test(una_persona_no_puede_crear_una_obra_maestra_de_otro_area):-
+    not(puedeHacer(carla, crearObraMaestra(mecanico))).
+
+test(una_persona_puede_cubrir_a_otra_en_una_tarea_si_ambas_pueden_realizarla, nondet):-
+    puedeCubrir(carla, aye, crearObraMaestra(alquimista)).
+
+test(una_persona_no_puede_cubrir_a_otra_en_una_tarea_si_no_puede_realizar_esa_tarea):-
+    not(puedeCubrir(juan, aye, crearObraMaestra(alquimista))).
+
+test(puede_cubrir_es_irreflexiva_respecto_a_la_persona):-
+    not(puedeCubrir(carla, carla, crearObraMaestra(alquimista))).
+
+test(una_persona_es_irremplazable_si_es_la_unica_que_puede_hacer_una_tarea, nondet):-
+    esIrremplazable(gise, crearObraMaestra(mecanico)).
+
+test(una_persona_no_es_irremplazable_si_no_es_la_unica_que_puede_hacer_una_tarea):-
+    not(esIrremplazable(carla, crearObraMaestra(alquimista))).
+
+test(una_persona_no_es_irremplazable_si_ni_puede_realizar_la_tarea):-
+    not(esIrremplazable(lucas, cocinarMilanesasConPure)),
+    not(esIrremplazable(juan, cocinarMilanesasConPure)).
+
+test(una_persona_no_es_comodin_si_existe_alguna_tarea_que_no_pueda_realizar):-
+    not(esComodin(juan)).
+
+test(una_persona_es_comodin_si_puede_realizar_todas_las_tareas, nondet):-
+    esComodin(gise).
 
 :- end_tests(clase13).
