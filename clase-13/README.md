@@ -13,6 +13,15 @@ TP-4: https://classroom.github.com/g/RRHBIK6D
 
 ## ¿Qué mas puedo leer, ver o practicar?
 
+### Apuntes de la cátedra
+
+- [Módulo 3: Estructuras de datos](https://docs.google.com/document/d/1I8Xvss7LBuUjV-GGiag7C8d9wa3vUB6B37Qi4LG-ts0/edit)
+
+### Wiki de Uqbar
+
+- [Functores en Prolog](https://wiki.uqbar.org/wiki/articles/paradigma-logico---functores.html)
+- [Polimorfismo en prolog](https://wiki.uqbar.org/wiki/articles/polimorfismo-en-el-paradigma-logico.html)
+
 ### Práctica de Mumuki
 
 - [Lección 8: Functores](https://mumuki.io/pdep-utn/lessons/706-programacion-logica-functores)
