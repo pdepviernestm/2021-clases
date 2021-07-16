@@ -131,3 +131,75 @@ ocupa(granBretania, rojo).
 ocupa(espania, rojo).
 ocupa(alemania, rojo).
 
+% le_corresponden_ejercitos(Jugador, 3):-
+%     cantidad_paises(Jugador, CantidadPaises),
+%     CantidadPaises < 6.
+
+% Esta solucion tiene un bug, yo podría tener menos de 6 paises y aun así tener un continente (oceania)
+% le_corresponden_ejercitos(Jugador, CantidadEjercitos):-
+%     cantidad_paises(Jugador, CantidadPaises),
+%     CantidadPaises >= 6,
+%     bonus_por_continentes_ocupados(Jugador, CantidadEjercitosPorContinentes),
+%     CantidadEjercitos is div(CantidadPaises, 2) + CantidadEjercitosPorContinentes.
+
+% bonus_por_continentes_ocupados(Jugador, CantidadTotalDeEjercitos):-
+%     findall(CantidadEjercitos,
+%             (ocupa_continente(Jugador, Continente),
+%             puntos_por_continente(Continente, CantidadEjercitos)), CantidadesDeEjercitos),
+%     sum_list(CantidadesDeEjercitos, CantidadTotalDeEjercitos).
+
+% Alterntiva:
+puede_incorporar_ejercitos(Jugador, CantidadEjercitos):-
+    cantidad_paises(Jugador, CantidadPaises),
+    CantidadEjercitos is max(3, div(CantidadPaises, 2)).
+
+puede_incorporar_ejercitos(Jugador, CantidadEjercitos):-
+    ocupa_continente(Jugador, Continente),
+    puntos_por_continente(Continente, CantidadEjercitos).
+
+le_corresponden_ejercitos(Jugador, CantidadTotalEjercitos):-
+    jugador(Jugador),
+    findall(CantidadEjercitos,
+            puede_incorporar_ejercitos(Jugador, CantidadEjercitos),
+            CantidadesDeEjercitos),
+    sum_list(CantidadesDeEjercitos, CantidadTotalEjercitos).
+
+
+puntos_por_continente(oceania, 2).
+puntos_por_continente(africa, 3).
+puntos_por_continente(americaDelSur, 3).
+puntos_por_continente(americaDelNorte, 5).
+puntos_por_continente(europa, 5).
+puntos_por_continente(asia, 7).
+
+% Alternativa:
+%
+% le_corresponden_ejercitos(Jugador, CantidadEjercitos):-
+%     cantidad_paises(Jugador, CantidadPaises),
+%     CantidadEjercitos is max(3, div(CantidadPaises, 2)).
+
+cantidad_paises(Jugador, CantidadPaises):-
+    jugador(Jugador),
+    findall(Pais, ocupa(Pais, Jugador), Paises),
+    length(Paises, CantidadPaises).
+
+ocupa_continente(Jugador, Continente):-
+    continente(Continente),
+    jugador(Jugador),
+    forall(estaEn(Continente, Pais), ocupa(Pais, Jugador)).
+
+:- begin_tests(teg).
+
+test(si_tiene_menos_de_6_paises_le_corresponden_3_ejercitos, nondet):-
+    le_corresponden_ejercitos(magenta, 3).
+test(si_tiene_6_paises_o_mas_le_corresponden_tantos_ejercitos_como_la_mitad_de_sus_paises_redondeando_para_abajo):-
+    le_corresponden_ejercitos(verde, 4).
+test(si_tiene_continentes_ocupados_le_corresponden_ejercitos_por_sus_paises_ocupados_mas_el_bonus_por_continente):-
+    le_corresponden_ejercitos(azul, 8),
+    le_corresponden_ejercitos(amarillo, 18).
+test(si_ocupa_todos_los_paises_que_estan_en_un_continente_ocupa_ese_continente):-
+    ocupa_continente(azul, oceania).
+test(si_no_ocupa_todos_los_paises_que_estan_en_un_continente_no_ocupa_ese_continente):-
+    not(ocupa_continente(verde, asia)).
+
+:- end_tests(teg).
