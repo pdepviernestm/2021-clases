@@ -8,7 +8,7 @@
 
 ## ¿Que hay para la clase que viene?
 
-TP-Integrador: https://docs.google.com/document/d/1NF4enVXYla6iwrVd3cxD863nyAQLZKLoRJrhqIy5Lqo/edit?usp=sharing
+TP-Integrador: https://classroom.github.com/g/3OSdfTsz
 
 ## ¿Qué mas puedo leer, ver o practicar?
 
