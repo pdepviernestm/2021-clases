@@ -76,9 +76,52 @@ hay_quimica_entre(Persona, Personaje):-
     forall(sueniaCon(Persona,Suenio), suenio_puro(Suenio)),
     not(ambiciosa(Persona)).
 
-
 suenio_puro(serFutbolista(_)).
 suenio_puro(cantante(CantidadDiscos)):- CantidadDiscos < 200_000.
+
+enfermo(campanita).
+enfermo(conejoDePascua).
+enfermo(reyesMagos).
+
+% puede_alegrar(Personaje, Persona):-
+%     condicion_para_alegrar(Personaje, Persona),
+%     not(enfermo(Personaje)).
+% puede_alegrar(Personaje, Persona):-
+%     condicion_para_alegrar(Personaje, Persona),
+%     personaje_backup(Personaje, PersonajeDeBackup),
+%     not(enfermo(PersonajeDeBackup)).
+
+% condicion_para_alegrar(Personaje, Persona):-
+%     tiene_quimica(Persona, Personaje),
+%     sueniaCon(Persona, _).
+
+puede_alegrar(Personaje, Persona):-
+    tiene_quimica(Persona, Personaje),
+    sueniaCon(Persona, _),
+    esta_disponible_personaje_o_personaje_de_backup(Personaje).
+
+esta_disponible_personaje_o_personaje_de_backup(Personaje):-
+    not(enfermo(Personaje)).
+esta_disponible_personaje_o_personaje_de_backup(Personaje):-
+    personaje_backup(Personaje, PersonajeDeBackup),
+    not(enfermo(PersonajeDeBackup)).
+
+amigos(campanita, reyesMagos).
+amigos(campanita, conejoDePascua).
+amigos(conejoDePascua, cavenaghi).
+
+personaje_backup(Personaje, PersonajeDeBackup):-
+    amigos(Personaje, PersonajeDeBackup).
+personaje_backup(Personaje, PersonajeDeBackup):-
+    amigos(Personaje, AmigoDirecto),
+    personaje_backup(AmigoDirecto, PersonajeDeBackup).
+
+% amigos(Personaje, AmigoDirecto),
+% amigos(AmigoDirecto, PersonajeDeBackup).
+
+% amigos(Personaje, AmigoDirecto),
+% amigos(AmigoDirecto, AmigoIndirecto),
+% personaje_backup(AmigoIndirecto, PersonajeDeBackup).
 
 :- begin_tests(suenios).
 
@@ -113,6 +156,17 @@ test(una_persona_tiene_quimica_con_un_personaje_si_cree_en_el_y_todos_sus_suenio
     tiene_quimica(macarena, reyesMagos),
     not(tiene_quimica(gabriel, cavenaghi)).
 
+test(un_personaje_puede_alegrar_a_una_persona_si_tiene_quimica_con_esa_persona_y_la_persona_tiene_algun_suenio_y_el_personaje_no_esta_enfermo, nondet):-
+    puede_alegrar(magoCapria, macarena).
 
+test(un_personaje_puede_alegrar_a_una_persona_si_tiene_quimica_con_esa_persona_y_la_persona_tiene_algun_suenio_y_hay_algun_personaje_de_backup_que_no_esta_enfermo, nondet):-
+    puede_alegrar(campanita, macarena).
+
+test(un_amigo_directo_es_un_personaje_de_backup, nondet):-
+    personaje_backup(campanita, conejoDePascua),
+    personaje_backup(conejoDePascua, cavenaghi).
+
+test(un_amigo_indirecto_es_un_personaje_de_backup, nondet):-
+    personaje_backup(campanita, cavenaghi).
 
 :- end_tests(suenios).
