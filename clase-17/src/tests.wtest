@@ -1,0 +1,105 @@
+import beti.*
+import pepita.*
+import josefa.*
+import entrenador.*
+
+describe "pepita" {
+
+	test "su energia inicial es 100" {
+		assert.equals(100, pepita.energia())
+	}
+	
+	test "al volar pierde 40 joules de energia + 5 por kilometro volado" {
+		pepita.volar(1)
+		
+		assert.equals(55, pepita.energia())
+	}
+	
+	test "al comer, gana 2 joules de energia por cada gramo que come" {
+		pepita.comer(5)
+		
+		assert.equals(110, pepita.energia())
+	}
+}
+
+describe "josefa" {
+	test "su energia inicial es 80" {
+		assert.equals(80, josefa.energia())
+	}
+	
+	test "su energia aumenta en 5 por cada gramo comido" {
+		josefa.comer(5)
+		
+		assert.equals(105, josefa.energia())
+	}
+	
+	test "su energia disminuye 3 por cada kilometro volado" {
+		josefa.volar(10)
+		
+		assert.equals(50, josefa.energia())
+	}
+	
+	test "si volo y no comio esta explotada" {
+		josefa.volar(1)
+		
+		assert.equals("Explotada", josefa.estadoEmocional())
+	}
+	
+	test "si le dimos de comer mas de lo que la hicimos volar esta Bonita y Gordita" {
+		josefa.volar(5)
+		josefa.comer(6)
+		
+		assert.equals("Bonita y gordita", josefa.estadoEmocional())
+	}
+	
+	test "si su energia es mayor a su energia inicial esta energetica" {
+		josefa.comer(5)
+		josefa.volar(5)
+		
+		assert.equals("Energica", josefa.estadoEmocional())
+	}
+	
+	test "si no esta ni explotada, ni bonita y gordita, ni energetica, entonces esta indiferente" {
+		assert.equals("Indiferente", josefa.estadoEmocional())
+	}
+}
+
+describe "beti" {	
+	test "su energia es la misma que la de su compañera" {
+		beti.companiera(pepita)
+		
+		assert.equals(100, beti.energia())
+	}
+	
+	test "al comer, le da la mitad a su compañera" {
+		beti.companiera(pepita)
+		beti.comer(10)
+		
+		assert.equals(110, beti.energia())
+		assert.equals(110, pepita.energia())
+	}
+	
+	test "al volar, su compañera tambien vuela la misma cantidad" {
+		beti.companiera(pepita)
+		beti.volar(2)
+		
+		assert.equals(50, beti.energia())
+		assert.equals(50, pepita.energia())
+	}
+}
+
+describe "entrenador" {
+	test "al entrenar a un pajaro, le da de comer 10 gramos, le hace volar 20km y si queda con menos de 20 de energia le da de comer 10 gramos mas" {
+		pepita.comer(15)
+		entrenador.entrenar(pepita)
+		
+		assert.equals(30, pepita.energia())
+	}
+	
+	test "al entrenar a un pajaro, le da de comer 10 gramos, le hace volar 20km y si queda con mas de 20 de energia le da de comer 2 gramos mas" {
+		pepita.comer(40)
+		entrenador.entrenar(pepita)
+		
+		assert.equals(64, pepita.energia())
+	}
+}
