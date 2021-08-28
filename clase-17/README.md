@@ -21,8 +21,9 @@ https://classroom.github.com/a/jQIXSTik
 - Si eligen juego, armar una lista de ideas posibles así consensuamos por cual van. Pueden sacar ideas de acá si no se les ocurre:
 https://docs.google.com/document/d/1hIyF7JHVLJ2u-a69tJRH5YfxPIdaiMDav3tCArkX-qc/edit
 
+### Documentación de Wollok
 
-## ¿Qué mas puedo leer, ver o practicar?
+- https://www.wollok.org/documentacion/conceptos/
 
 ### Apuntes de la cátedra
 
@@ -49,8 +50,35 @@ https://docs.google.com/document/d/1hIyF7JHVLJ2u-a69tJRH5YfxPIdaiMDav3tCArkX-qc/
 
 [![Intro a objetos por Maiu y Nahue](https://img.youtube.com/vi/0MVw2LH-7HQ/0.jpg)](https://youtu.be/0MVw2LH-7HQ "Intro a objetos por Maiu y Nahue")
 
+### Wollok Game
+
+Documentación:
+https://www.wollok.org/documentacion/conceptos/
+(Hay que hacer click en la pestaña `Game`)
+
+- Dos tutoriales de Wollok Game:
+
+[![Wollok Game - Primeros pasos](https://img.youtube.com/vi/Kc9W7u1wg2Y/0.jpg)](https://youtu.be/Kc9W7u1wg2Y "Wollok Game - Primeros pasos")
+
+[![#Tutorial de Wollok Game (Clase de Paradigmas de Programación)](https://img.youtube.com/vi/5tnjuZgylxI/0.jpg)](https://youtu.be/5tnjuZgylxI "#Tutorial de Wollok Game (Clase de Paradigmas de Programación)")
+
+- Un par de demos de juegos hechos por otros alumnos:
+
+[![COVID Runner](https://img.youtube.com/vi/Sjq0S91KZoI/0.jpg)](https://youtu.be/Sjq0S91KZoI "COVID Runner")
+
+[![Asteroids](https://img.youtube.com/vi/M_yNTQgk2N0/0.jpg)](https://youtu.be/M_yNTQgk2N0 "Asteroids")
+
+- Algunos juegos hechos en Wollok Game:
+
+Ejemplo de un tamagotchi hecho para una clase del 2019
+https://github.com/JuanFdS/ejemplo-wollok-game-pokegotchi
+
+Juego hecho como tp integrador por alumnos del año pasado:
+https://github.com/JuanFdS/teamfighttactics
+
 ### Extras
 
  The Evolution of Smalltalk from Smalltalk-72 through Squeak, por Daniel Ingalls
 
  https://www.pldi21.org/prerecorded_hopl.17.html
+
