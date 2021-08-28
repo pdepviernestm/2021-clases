@@ -1,0 +1,1 @@
+Hoy se tomó parcial de lógico.
