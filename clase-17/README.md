@@ -12,6 +12,9 @@
 
 - Usar el TP-0 para revisar que hayan setupeado todo bien:
 https://classroom.github.com/a/jQIXSTik
+    - **Fe de erratas sobre las instrucciones del setup:**
+        - Si no les aparece el plugin Simplified Git, pueden usar alguno de los otros que aparezcan en el menú de Git.
+        - La contraseña que tienen que ingresar no es la contraseña con la que entran a github, es un token que tal vez ya hayan generado siguiendo estas instrucciones: https://docs.github.com/es/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-token 
 
 - Armar grupo de 6 personas. Cuando lo tengan mandarmelo por discord o por mail (a juan9794@gmail.com) junto con si eligen hacer juego o prefieren enunciado y también con nombre del grupo.
 
