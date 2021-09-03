@@ -1,0 +1,24 @@
+import wollok.game.*
+import personaje.*
+import enemigo.*
+
+program juego {
+	game.cellSize(32)
+	game.height(10)
+	game.width(10)
+	
+	game.addVisual(personaje)
+	game.addVisual(enemigo)
+
+	keyboard.down().onPressDo { personaje.abajo() }
+	keyboard.up().onPressDo { personaje.arriba() }
+	keyboard.right().onPressDo { personaje.derecha() }
+	keyboard.left().onPressDo { personaje.izquierda() }
+	keyboard.x().onPressDo { personaje.atacar() }
+	
+	game.onCollideDo(enemigo, { otro =>
+		otro.colisionasteConEnemigo(enemigo)
+	})
+	
+	game.start()
+}

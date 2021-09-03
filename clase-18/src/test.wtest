@@ -1,0 +1,34 @@
+import personaje.*
+import wollok.game.*
+
+test "la posicion inicial del personaje es 4, 4" {
+	assert.equals(game.at(4, 4), personaje.position())
+}
+
+test "al decirle a un personaje que se mueva hacia abajo, su posicion en Y baja en 1 y su imagen mira hacia abajo" {
+	personaje.abajo()
+	
+	assert.equals(game.at(4, 3), personaje.position())
+	assert.equals("Visuals/CHARACTERS/player/hero-abajo.png", personaje.image())
+}
+
+test "al decirle a un personaje que se mueva hacia la izquierda, su posicion en X baja 1 y su imagen mira hacia la izquierda" {
+	personaje.izquierda()
+	
+	assert.equals(game.at(3, 4), personaje.position())
+	assert.equals("Visuals/CHARACTERS/player/hero-izquierda.png", personaje.image())
+}
+
+test "al decirle a un personaje que se mueva hacia la derecha, su posicion en X aumenta 1 y su imagen mira hacia la derecha" {
+	personaje.derecha()
+	
+	assert.equals(game.at(5, 4), personaje.position())
+	assert.equals("Visuals/CHARACTERS/player/hero-derecha.png", personaje.image())
+}
+
+test "al decirle a un personaje que se mueva hacia arriba, su posicion en Y aumenta 1 y su imagen mira hacia arriba" {
+	personaje.arriba()
+	
+	assert.equals(game.at(4, 5), personaje.position())
+	assert.equals("Visuals/CHARACTERS/player/hero-arriba.png", personaje.image())
+}
