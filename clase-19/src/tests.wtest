@@ -1,0 +1,54 @@
+import objetos.*
+
+// Como quedan los tests ahora que tenemos clases en vez de objects:
+//describe "una golondrina" {
+//
+//	test "su energia inicial es 100" {
+//		const unaGolondrina = new Golondrina()
+//
+//		assert.equals(100, unaGolondrina.energia())
+//	}
+//	
+//	test "al volar pierde 40 joules de energia + 5 por kilometro volado" {
+//		const unaGolondrina = new Golondrina()
+//		
+//		unaGolondrina.volar(1)
+//		
+//		assert.equals(55, unaGolondrina.energia())
+//	}
+//	
+//	test "al comer, gana 2 joules de energia por cada gramo que come" {
+//		const unaGolondrina = new Golondrina()
+//		
+//		unaGolondrina.comer(5)
+//		
+//		assert.equals(110, unaGolondrina.energia())
+//	}
+//}
+
+// Alternativa, en caso de que el objeto siempre lo creemos igual:
+
+describe "una golondrina" {
+	const unaGolondrina = new Golondrina()
+	
+	// si fuese necesario para algun test, podria tener cosas como:
+	//	const unaGolondrinaCansada = new Golondrina(energia = 10)
+	//	const unaGolondrinaEnergica = new Golondrina(energia = 200)
+		
+	test "su energia inicial es 100" {
+		assert.equals(100, unaGolondrina.energia())
+	}
+	
+	test "al volar pierde 40 joules de energia + 5 por kilometro volado" {
+		unaGolondrina.volar(1)
+		
+		assert.equals(55, unaGolondrina.energia())
+	}
+	
+	test "al comer, gana 2 joules de energia por cada gramo que come" {
+		unaGolondrina.comer(5)
+		
+		assert.equals(110, unaGolondrina.energia())
+	}
+}
+
