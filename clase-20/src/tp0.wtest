@@ -1,5 +1,167 @@
-import tp.*
+import micro.*
+import personas.*
 
-test "Test de ejemplo" {
-		assert.equals(4, 2 + 2)
+
+describe "punto 1" {
+
+	test "una persona apurada se sube siempre que el micro tiene lugar" {
+		
+		const microConLugar = new Micro(maximoPersonasSentadas = 1, maximoPersonasParadas = 1)
+		const persona = new Persona(personalidad = new Apurada())
+	
+		assert.that(microConLugar.puedeSubir(persona))
+	}
+	
+	test "si el micro no tiene lugar no se puede subir" {
+		const microSinLugar = new Micro(maximoPersonasSentadas = 0, maximoPersonasParadas = 0)
+		const persona = new Persona(personalidad = new Apurada())
+	
+		assert.notThat(microSinLugar.puedeSubir(persona))
+	}
+	
+	test "una persona moderada se puede subir al micro si quedan suficientes lugares libres para su criterio" {
+		const microConLugar = new Micro(maximoPersonasSentadas = 1, maximoPersonasParadas = 1)
+		const persona = new Persona(personalidad = new Moderada(minimoEspacioDisponible = 2))
+	
+		assert.that(microConLugar.puedeSubir(persona))
+	}
+	
+	test "una persona moderada no se puede subir al micro si no le quedan suficientes lugares libres para su criterio" {
+		const microSinSuficienteLugar = new Micro(maximoPersonasSentadas = 1, maximoPersonasParadas = 0)
+		const persona = new Persona(personalidad = new Moderada(minimoEspacioDisponible = 2))
+	
+		assert.notThat(microSinSuficienteLugar.puedeSubir(persona))
+	}
+	
+	test "una persona claustrofobica se sube al micro si tiene mas de 120m3 de volumen" {
+		const microGrande = new Micro(maximoPersonasSentadas = 1, maximoPersonasParadas = 1, volumen = 130)
+		const persona = new Persona(personalidad = new Claustrofobica())
+		
+		assert.that(microGrande.puedeSubir(persona))
+	}
+	
+	test "una persona claustrofobica no se sube al micro si tiene 120m3 de volumen" {
+				const microGrande = new Micro(maximoPersonasSentadas = 1, maximoPersonasParadas = 1, volumen = 120)
+		const persona = new Persona(personalidad = new Claustrofobica())
+		
+		assert.notThat(microGrande.puedeSubir(persona))
+	}
+	
+	test "una persona claustrofobica no se sube al micro si tiene menos de 120m3 de volumen" {
+		const microGrande = new Micro(maximoPersonasSentadas = 1, maximoPersonasParadas = 1, volumen = 110)
+		const persona = new Persona(personalidad = new Claustrofobica())
+		
+		assert.notThat(microGrande.puedeSubir(persona))
+	}
+	
+	test "una persona fiaca se sube al micro si tiene lugar para sentarse" {
+		const microConLugarParaSentarse = new Micro(maximoPersonasSentadas = 1, maximoPersonasParadas = 0)
+		const persona = new Persona(personalidad = new Fiaca())
+		
+		assert.that(microConLugarParaSentarse.puedeSubir(persona))
+	}
+	
+	test "una persona fiaca no se sube al micro si no tiene lugar para sentarse" {
+		const microSinLugarParaSentarse = new Micro(maximoPersonasSentadas = 0, maximoPersonasParadas = 10)
+		const persona = new Persona(personalidad = new Fiaca())
+		
+		assert.notThat(microSinLugarParaSentarse.puedeSubir(persona))
+	}
+	
+	test "los obsecuentes toman la misma decision que su jefe" {
+		const microCon3EspaciosDisponibles = new Micro(maximoPersonasSentadas = 2, maximoPersonasParadas = 1)
+		const microCon2EspaciosDisponibles = new Micro(maximoPersonasSentadas = 2, maximoPersonasParadas = 0)
+		const microCon1EspacioDisponibles = new Micro(maximoPersonasSentadas = 0, maximoPersonasParadas = 1)
+		const personaQueSeSubeCuandoHay3Espacios = new Persona(personalidad = new Moderada(minimoEspacioDisponible = 3))
+		const personaObsecuente = new Persona(personalidad = new Obsecuente(jefe = personaQueSeSubeCuandoHay3Espacios))
+		
+		assert.equals(microCon1EspacioDisponibles.puedeSubir(personaObsecuente),
+					  microCon1EspacioDisponibles.puedeSubir(personaQueSeSubeCuandoHay3Espacios))
+	    assert.equals(microCon2EspaciosDisponibles.puedeSubir(personaObsecuente),
+	  				  microCon2EspaciosDisponibles.puedeSubir(personaQueSeSubeCuandoHay3Espacios))
+		assert.equals(microCon3EspaciosDisponibles.puedeSubir(personaObsecuente),
+					  microCon3EspaciosDisponibles.puedeSubir(personaQueSeSubeCuandoHay3Espacios))
+	}
+}
+
+describe "punto 2" {
+	test "subir a una persona disminuye la cantidad de lugares en el micro por uno" {
+		const cantidadDeLugares = 5
+		const micro = new Micro(maximoPersonasSentadas = cantidadDeLugares, maximoPersonasParadas = 0)
+		const persona = new Persona(personalidad = new Apurada())
+		
+		micro.subirA(persona)
+		
+		assert.equals(4, micro.cuantosLugaresLibresQuedan())
+	}
+	
+	test "subir a una persona cuando no quedan suficientes lugares tira error y no cambia la cantidad de lugares libres" {
+		const cantidadDeLugares = 2
+		const micro = new Micro(maximoPersonasSentadas = cantidadDeLugares, maximoPersonasParadas = 0)
+		const persona = new Persona(personalidad = new Moderada(minimoEspacioDisponible = 3))
+		
+		assert.throwsException({micro.subirA(persona)})
+		assert.equals(2, micro.cuantosLugaresLibresQuedan())
+	}
+	
+	test "el micro se puede llenar si se suben tantas personas como lugares libres" {
+		const cantidadDeLugares = 1
+		const micro = new Micro(maximoPersonasSentadas = cantidadDeLugares, maximoPersonasParadas = 0)
+		const persona = new Persona(personalidad = new Apurada())
+		
+		micro.subirA(persona)
+		
+		assert.notThat(micro.hayLugar())
+	}
+	
+	test "al subirse una persona a un micro trata de sentarse primero" {
+		const micro = new Micro(maximoPersonasSentadas = 2, maximoPersonasParadas = 2)
+		const persona = new Persona(personalidad = new Apurada())
+		
+		micro.subirA(persona)
+		
+		assert.equals(1, micro.lugaresParaIrSentado())
+		assert.equals(2, micro.lugaresParaIrParado())
+	}
+	
+	test "al subirse una persona a un micro se sube parada si no hay lugares para sentarse" {
+		const micro = new Micro(maximoPersonasSentadas = 0, maximoPersonasParadas = 2)
+		const persona = new Persona(personalidad = new Apurada())
+		
+		micro.subirA(persona)
+		
+		assert.equals(0, micro.lugaresParaIrSentado())
+		assert.equals(1, micro.lugaresParaIrParado())
+	}
+	
+	test "al bajarse una persona, se libera el lugar que estaba ocupando" {
+		const micro = new Micro(maximoPersonasSentadas = 1, maximoPersonasParadas = 1)
+		const personaQueViajaSentada = new Persona(personalidad = new Apurada())
+		const personaQueViajaParada = new Persona(personalidad = new Apurada())
+		micro.subirA(personaQueViajaSentada)
+		micro.subirA(personaQueViajaParada)
+		
+		micro.bajarA(personaQueViajaSentada)
+		assert.equals(1, micro.lugaresParaIrSentado())
+		micro.bajarA(personaQueViajaParada)
+		assert.equals(1, micro.lugaresParaIrParado())
+	}
+	
+	test "no se puede bajar a alguien que no esta viajando" {
+		const micro = new Micro(maximoPersonasSentadas = 1, maximoPersonasParadas = 1)
+		const personaQueNoEstaViajando = new Persona(personalidad = new Apurada())
+		
+		assert.throwsExceptionWithMessage("No se puede bajar a alguien que no esta viajando", { micro.bajarA(personaQueNoEstaViajando) })
+	}
+	
+	test "una persona no puede bajarse dos veces seguidas del micro" {
+		const micro = new Micro(maximoPersonasSentadas = 2, maximoPersonasParadas = 0)
+		const persona = new Persona(personalidad = new Apurada())
+		
+		micro.subirA(persona)
+		
+		micro.bajarA(persona)
+		assert.throwsExceptionWithMessage("No se puede bajar a alguien que no esta viajando", { micro.bajarA(persona) })
+		assert.equals(2, micro.cuantosLugaresLibresQuedan())
+	}
 }
