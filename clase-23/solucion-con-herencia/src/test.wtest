@@ -1,0 +1,104 @@
+import example.*
+
+describe "energia maxima" {
+	test "para un aprendiz es 50" {
+	  const aprendiz = new Aprendiz()
+
+	  assert.equals(50, aprendiz.energiaMaxima())
+	}
+	
+	test "para un archimago es 100 + el doble de su nivel" {
+	  const archimago = new Archimago(nivel=3)
+		
+	  assert.equals(106, archimago.energiaMaxima())
+	}
+	
+	test "para un hechicero supremo, es 500" {
+		const hechiceroSupremo = new HechiceroSupremo()
+		
+		assert.equals(500, hechiceroSupremo.energiaMaxima())
+	}
+}
+
+describe "hechizos" {
+	test "un aprendiz puede usar hechizos que requieran menos de 40 de energia y que requieran menos energia de la que tiene disponible" {
+		const aprendiz = new Aprendiz(energia = 10)
+		const hechizo = new HechizoCurativo(costoEnEnergia = 5)
+		
+		assert.that(aprendiz.puedeUsar(hechizo))
+	}
+	
+	test "un aprendiz no puede usar un hechizo que requiera mas de 40 de energia" {
+		const aprendiz = new Aprendiz(energia = 50)
+		const hechizo = new HechizoCurativo(costoEnEnergia = 45)
+		
+		assert.notThat(aprendiz.puedeUsar(hechizo))
+	}
+	
+	test "un aprendiz no puede usar un hechizo que requiera mas energia de la que tiene" {
+		const aprendiz = new Aprendiz(energia = 20)
+		const hechizo = new HechizoCurativo(costoEnEnergia = 25)
+		
+		assert.notThat(aprendiz.puedeUsar(hechizo))
+	}
+	
+	test "un archimago no puede usar un hechizo que requiera mas energia de la que tiene" {
+		const archimago = new Archimago(energia = 20)
+		const hechizo = new HechizoCurativo(costoEnEnergia = 25)
+		
+		assert.notThat(archimago.puedeUsar(hechizo))
+	}
+	
+	test "un archimago no puede usar un hechizo prohibido" {
+		const archimago = new Archimago(energia = 120, nivel = 10)
+		const hechizoProhibido = avadaKedabra
+
+		assert.notThat(archimago.puedeUsar(hechizoProhibido))
+	}
+	
+	test "un archimago puede usar un hechizo si no es prohibido y si tiene mas energia magica de la que el hechizo requiere" {
+		const archimago = new Archimago(energia = 50)
+		const hechizo = new HechizoCurativo(costoEnEnergia = 25)
+		
+		assert.that(archimago.puedeUsar(hechizo))
+	}
+	
+	test "un hechicero supremo puede usar cualquier hechizo aun si no tiene suficiente energia magica" {
+		const hechiceroSupremo = new HechiceroSupremo(energia = 10)
+		const hechizo = new HechizoCurativo(costoEnEnergia = 25)
+		
+		assert.that(hechiceroSupremo.puedeUsar(hechizo))
+	}
+}
+
+describe "hechizo curativo" {
+	test "al usar un hechizo curativo en otro hechicero, el otro recupera tanta energia como el doble de el costo y el usuario pierde tanta energia como el coste del hechizo" {
+		const hechiceroACurar = new Aprendiz(energia = 10)
+		const hechiceroQueCura = new Aprendiz(energia = 50)
+		const curacion = new HechizoCurativo(costoEnEnergia = 20)
+		
+		hechiceroQueCura.usar(curacion, hechiceroACurar)
+		
+		assert.equals(50, hechiceroACurar.energia())
+		assert.equals(30, hechiceroQueCura.energia())
+	}
+	
+	test "al usar en otro hechicero, no lo puede dejar en mas energia que su energia maxima" {
+		const hechiceroACurar = new Aprendiz(energia = 10)
+		const hechiceroQueCura = new Aprendiz(energia = 50)
+		const curacion = new HechizoCurativo(costoEnEnergia = 40)
+		
+		hechiceroQueCura.usar(curacion, hechiceroACurar)
+		
+		assert.equals(50, hechiceroACurar.energia())
+	}
+	
+	test "un hechicero se puede curar a si mismo" {
+		const hechicero = new Aprendiz(energia = 40)
+		const curacion = new HechizoCurativo(costoEnEnergia = 20)
+		
+		hechicero.usar(curacion, hechicero)
+		
+		assert.equals(50, hechicero.energia())
+	}
+}
