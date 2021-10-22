@@ -1,0 +1,58 @@
+import ingredientes.*
+
+
+describe "bigote de gato" {
+	test "su rareza es 1" {
+		const bigoteDeGato = new BigoteDeGato()
+		
+		assert.equals(1, bigoteDeGato.rareza())		
+	}
+	
+	test "al hervirlo queda igual" {
+		const bigoteDeGato = new BigoteDeGato()
+		
+		bigoteDeGato.hervir()
+		
+		assert.equals(1, bigoteDeGato.rareza())
+	}
+}
+
+describe "hiedra venenosa" {
+	test "su rareza es igual a su concentracion de veneno" {
+		const hiedraPocoVenenosa = new HiedraVenenosa(concentracion = 3)
+		const hiedraMuyVenenosa = new HiedraVenenosa(concentracion = 50)
+		
+		assert.equals(3, hiedraPocoVenenosa.rareza())
+		assert.equals(50, hiedraMuyVenenosa.rareza())
+	}
+	
+	test "al hervirla, aumenta su concentracion de veneno por dos" {
+		const hiedraVenenosa = new HiedraVenenosa(concentracion = 15)
+		
+		hiedraVenenosa.hervir()
+		
+		assert.equals(30, hiedraVenenosa.concentracion())
+	}
+}
+
+describe "trebol" {
+	test "si tiene cuatro hojas, su rareza es de 20" {
+		const trebolDe4Hojas = new Trebol(hojas = 4)
+		
+		assert.equals(20, trebolDe4Hojas.rareza())
+	}
+	
+	test "si no tiene cuatro hojas, su rareza es de 1" {
+		const trebolDe3Hojas = new Trebol(hojas = 3)
+		
+		assert.equals(1, trebolDe3Hojas.rareza())
+	}
+	
+	test "al hervirlo, pierde una hoja" {
+		const trebol = new Trebol(hojas = 5)
+		
+		trebol.hervir()
+		
+		assert.equals(4, trebol.hojas())
+	}
+}

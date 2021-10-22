@@ -1,0 +1,67 @@
+import pociones.*
+import ingredientes.*
+
+const unaPocion = new Pocion()
+
+test "una poción empieza sin ingredientes" {
+	assert.equals(0, unaPocion.cantidadIngredientes())
+}
+
+test "al agregar un ingrediente a una pocion, aumenta la cantidad de ingredientes en 1" {
+	unaPocion.agregarIngrediente(new Trebol(hojas = 4))
+	
+	assert.equals(1, unaPocion.cantidadIngredientes())
+}
+
+test "la rareza de una pocion vacia es 0" {
+	assert.equals(0, unaPocion.rareza())
+}
+
+test "la rareza de una pocion de un ingrediente es igual a la rareza de ese ingrediente" {
+	unaPocion.agregarIngrediente(new BigoteDeGato())
+	
+	assert.equals(1, unaPocion.rareza())
+}
+
+test "la rareza de una pocion es el promedio de rarezas de sus ingredientes" {
+	unaPocion.agregarIngrediente(new BigoteDeGato())
+	unaPocion.agregarIngrediente(new Trebol(hojas = 4))
+	unaPocion.agregarIngrediente(new HiedraVenenosa(concentracion = 3))
+	
+	assert.equals(8, unaPocion.rareza())
+}
+
+test "al hervirla, se hierven todos sus ingredientes" {
+	unaPocion.agregarIngrediente(new BigoteDeGato())
+	unaPocion.agregarIngrediente(new Trebol(hojas = 5))
+	unaPocion.agregarIngrediente(new HiedraVenenosa(concentracion = 3))
+	
+	unaPocion.hervir()
+	
+	assert.equals(9, unaPocion.rareza())
+}
+
+test "al destilarla, le deja solo los ingredientes con rareza mayor a 5" {
+	unaPocion.agregarIngrediente(new BigoteDeGato())
+	unaPocion.agregarIngrediente(new HiedraVenenosa(concentracion = 3))
+	unaPocion.agregarIngrediente(new Trebol(hojas = 4))
+	unaPocion.agregarIngrediente(new HiedraVenenosa(concentracion = 6))
+	
+	unaPocion.destilar()
+	
+	assert.equals(2, unaPocion.cantidadIngredientes())
+	assert.equals(13, unaPocion.rareza())
+}
+
+test "es rara si todos sus ingredientes tienen una rareza mayor a 10" {
+	unaPocion.agregarIngrediente(new Trebol(hojas = 4))
+	
+	assert.that(unaPocion.esRara())
+}
+
+test "no es rara si alguno de sus ingredientes tiene una rareza menor o igual a 10" {
+	unaPocion.agregarIngrediente(new Trebol(hojas = 4))
+	unaPocion.agregarIngrediente(new BigoteDeGato())
+	
+	assert.notThat(unaPocion.esRara())
+}
