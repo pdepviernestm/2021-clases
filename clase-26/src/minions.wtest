@@ -1,0 +1,213 @@
+import example.*
+import tareas.*
+
+describe "comer frutas" {
+	test "al comer una uva, aumenta en 1 su estamina" {
+		const empleado = new Minion(estamina = 1)
+		
+		empleado.comerFruta(uva)
+		
+		assert.equals(2, empleado.estamina())
+	}
+	
+	test "al comer una manzana, aumenta en 5 su estamina" {
+		const empleado = new Minion(estamina = 1)
+		
+		empleado.comerFruta(manzana)
+		
+		assert.equals(6, empleado.estamina())
+	}
+	
+	test "al comer una banana, aumenta en 10 su estamina" {
+		const empleado = new Minion(estamina = 1, raza= ciclope)
+		
+		empleado.comerFruta(banana)
+		
+		assert.equals(11, empleado.estamina())
+	}
+	
+	test "la estamina de un biclope esta limitada a 10 puntos" {
+		const minion = new Minion(estamina = 1, raza = biclope) // biclope con al menos de 1 de estamina
+		
+		minion.comerFruta(banana)
+		
+		assert.equals(10, minion.estamina())
+	}
+}
+
+describe "dificultad" {
+	test "la de arreglar una maquina es el doble que la complejidad de la maquina" {
+		const arreglarMaquina = new ArreglarMaquina(complejidadMaquina = 5)
+		const minion = new Minion(estamina = 1, raza = biclope)
+		
+		assert.equals(10, arreglarMaquina.dificultad(minion))
+	}
+	
+	test "para los biclopes, la de defender un sector es el grado de amenaza" {
+		const defenderUnSector = new DefenderUnSector(gradoDeAmenaza = 3)
+		const minion = new Minion(estamina = 1, raza = biclope)
+		
+		assert.equals(3, defenderUnSector.dificultad(minion))
+	}
+	
+	test "para los ciclopes, la de defender un sector es el doble del grado de amenaza" {
+		const defenderUnSector = new DefenderUnSector(gradoDeAmenaza = 3)
+		const minion = new Minion(estamina = 1, raza = ciclope)
+		
+		assert.equals(6, defenderUnSector.dificultad(minion))
+	}
+	
+	test "limpiar un sector tiene una dificultad de 10" {
+		const limpiarUnSector = new LimpiarSector(grande = true)
+		const minion = new Minion(estamina = 1, raza = ciclope)
+		
+		assert.equals(10, limpiarUnSector.dificultad(minion))
+	}
+	
+	test "la dificultad de todas las tareas de limpieza deberia poder configurarse" {
+		const limpiarUnSector = new LimpiarSector(grande = true)
+		const limpiarOtroSector = new LimpiarSector(grande = true)
+		const minion = new Minion(estamina = 1, raza = ciclope)
+		
+		dificultadDeLimpiarSector.cambiarDificultad(15)
+		
+		assert.equals(15, limpiarUnSector.dificultad(minion))
+		assert.equals(15, limpiarOtroSector.dificultad(minion))
+	}
+}
+
+describe "experiencia" {
+	test "la experiencia de un empleado es la cantidad de tareas multiplicada por la sumatoria de sus dificultades" {
+		const tareas = [new ArreglarMaquina(complejidadMaquina = 5),
+						new DefenderUnSector(gradoDeAmenaza = 3),
+						new LimpiarSector(grande = true)
+					   ]
+		const empleado = new Minion(estamina = 1, raza = ciclope, tareasRealizadas = tareas)
+		
+		assert.equals(78 /*26 * 3*/, empleado.experiencia())
+	}
+}
+
+describe "fuerza" {
+	test "La fuerza de un empleado es la mitad de su estamina + 2" {
+		const minion = new Minion(estamina = 2)
+		const otroMinion = new Minion(estamina = 5)
+		
+		assert.equals(3, minion.fuerza())
+		assert.equals(4.5, otroMinion.fuerza())
+	}
+	
+	test "si son soldados, suman 2 por cada vez que hayan usado su arma" {
+		const minion = new Minion(estamina = 2, rol = new Soldado(danioPorPractica = 3))
+		
+		assert.equals(6, minion.fuerza())
+	}
+	
+	test "si son ciclopes, tienen la mitad de fuerza que el resto" {
+		const minion = new Minion(estamina = 2, raza = ciclope)
+		
+		assert.equals(1.5, minion.fuerza())
+	}
+	
+	test "la fuerza de un ciclope obrero es (fuerza base + practica) / 2" {
+		const minion = new Minion(estamina = 4, raza = ciclope, rol = new Soldado(danioPorPractica = 3))
+		
+		assert.equals(3.5, minion.fuerza())
+	}
+}
+
+describe "poder realizar tareas" {
+	test "un minion puede arreglar una maquina si tiene estamina suficiente y tiene las herramientas necesarias" {
+		const arreglarMaquina = new ArreglarMaquina(complejidadMaquina = 3, herramientasNecesarias = [destornillador])
+		const minion = new Minion(estamina = 10, tareasRealizadas = [], herramientas = [destornillador])
+		
+		assert.that(arreglarMaquina.puedeSerRealizadaPor(minion))
+	}
+	
+	test "un minion que no tiene estamina suficiente para arreglar una maquina, no puede hacerlo" {
+		const arreglarMaquina = new ArreglarMaquina(complejidadMaquina = 5)
+		const minion = new Minion(estamina = 1, tareasRealizadas = [])
+		
+		assert.notThat(arreglarMaquina.puedeSerRealizadaPor(minion))
+	}
+	
+	test "un minion que no tiene las herramientas necesarias para arreglar una maquina, no puede hacerlo" {
+		const arreglarMaquina = new ArreglarMaquina(complejidadMaquina = 2, herramientasNecesarias = [destornillador])
+		const minion = new Minion(estamina = 10, tareasRealizadas = [])
+		
+		assert.notThat(arreglarMaquina.puedeSerRealizadaPor(minion))
+	}
+	
+	test "un minion que es mucama no puede defender un sector" {
+		const minion = new Minion(estamina = 10, rol = mucama)
+		const defenderUnSector = new DefenderUnSector(gradoDeAmenaza = 1)
+		
+		assert.notThat(defenderUnSector.puedeSerRealizadaPor(minion))
+	}
+	
+	test "un minion que no tiene suficiente fuerza no puede defender un sector" {
+		const minion = new Minion(estamina = 2, rol = obrero)
+		const defenderUnSector = new DefenderUnSector(gradoDeAmenaza = 10)
+		
+		assert.notThat(defenderUnSector.puedeSerRealizadaPor(minion))
+	}
+	
+	test "un minion que no es mucama y tiene fuerza mayor o igual al grado de amenaza, puede defender un sector" {
+		const minion = new Minion(estamina = 10, rol = obrero)
+		const defenderUnSector = new DefenderUnSector(gradoDeAmenaza = 1)
+		
+		assert.that(defenderUnSector.puedeSerRealizadaPor(minion))
+	}
+	
+	test "un minion con al menos 4 puntos de estamina puede limpiar un sector grande" {
+		const limpiarSectorGrande = new LimpiarSector(grande = true)
+		const minion = new Minion(estamina = 10, rol = obrero)
+		
+		assert.that(limpiarSectorGrande.puedeSerRealizadaPor(minion))
+	}
+	
+	test "un minion con menos de 4 puntos de estamina no puede limpiar un sector grande" {
+		const limpiarSectorGrande = new LimpiarSector(grande = true)
+		const minion = new Minion(estamina = 2, rol = obrero)
+		
+		assert.notThat(limpiarSectorGrande.puedeSerRealizadaPor(minion))
+	}
+	
+	test "un minion con menos de 1 punto de estamina no puede limpiar un sector que no es grande" {
+		const limpiarSectorGrande = new LimpiarSector(grande = false)
+		const minion = new Minion(estamina = 0, rol = obrero)
+		
+		assert.notThat(limpiarSectorGrande.puedeSerRealizadaPor(minion))
+	}
+	
+	test "un minion con al menos 1 punto de estamina puede limpiar un sector que no es grande" {
+		const limpiarSectorGrande = new LimpiarSector(grande = false)
+		const minion = new Minion(estamina = 1, rol = obrero)
+		
+		assert.that(limpiarSectorGrande.puedeSerRealizadaPor(minion))
+	}
+}
+
+describe "realizar tareas" {
+	test "si un minion no puede realizar una tarea, falla y no la incluye en sus tareas realizadas" {
+		const arreglarMaquina = new ArreglarMaquina(complejidadMaquina = 5)
+		const minion = new Minion(estamina = 1, tareasRealizadas = [])
+		
+		assert.throwsException {
+			minion.realizarTarea(arreglarMaquina)	
+		}
+		assert.notThat(minion.realizo(arreglarMaquina))
+	}
+	
+	test "si un minion si puede arreglar una maquina, baja su estamina en la complejidad de la maquina y la agrega a sus tareas" {
+		const arreglarMaquina = new ArreglarMaquina(complejidadMaquina = 2, herramientasNecesarias = [destornillador])
+		const minion = new Minion(estamina = 10, tareasRealizadas = [], herramientas = [destornillador])
+		
+		minion.realizarTarea(arreglarMaquina)
+		assert.that(minion.realizo(arreglarMaquina))
+		assert.equals(8, minion.estamina())
+		assert.equals(4, minion.experiencia())
+	}
+}
+
+// TODO: realizar tareas de Defender un Sector y Limpiar un Sector, considerando cuanta estamina consumen
