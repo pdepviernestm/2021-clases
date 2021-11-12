@@ -1,0 +1,25 @@
+import ciudad.*
+import wollok.game.*
+
+test "cuando una ciudad no tiene necesidades esta satisfecha" {
+	const puebloPaleta = new Ciudad(ubicacion=new Position(x=1, y=1), produccion="alfajores")
+	
+	assert.that(puebloPaleta.satisfecha())
+}
+
+test "cuando una ciudad tiene necesidades no esta satisfecha" {
+	const puebloPaleta = new Ciudad(ubicacion=new Position(x=1, y=1), produccion="alfajores")
+	
+	puebloPaleta.necesitar("yerba")
+	
+	assert.notThat(puebloPaleta.satisfecha())
+}
+
+test "cuando damos a una ciudad los productos que necesita esta satisfecha" {
+	const puebloPaleta = new Ciudad(ubicacion=new Position(x=1, y=1), produccion="alfajores")
+	puebloPaleta.necesitar("yerba")
+	
+	puebloPaleta.dar("yerba")
+	
+	assert.that(puebloPaleta.satisfecha())
+}

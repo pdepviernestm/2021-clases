@@ -1,0 +1,134 @@
+import bandada.*
+import ave.*
+import ciudad.*
+import wollok.game.*
+
+test "volar a una ciudad resta tanta energia como distancia entre ciudades y hace al ave ahora estar en la nueva ciudad" {
+ const puebloPaleta = new Ciudad(ubicacion=new Position(x=1, y=1), produccion="alfajores")
+ const ciudadCeleste = new Ciudad(ubicacion=new Position(x=0, y=1), produccion="yerba")
+ const pepita = new Ave(energia=2, ciudad=puebloPaleta)
+ 
+ pepita.volarA(ciudadCeleste)
+ 
+ assert.equals(1, pepita.energia())
+ assert.equals(ciudadCeleste, pepita.ciudad())
+}
+
+test "no puede volar a una ciudad para la que necesitaria mas energia de la que tiene" {
+ const puebloPaleta = new Ciudad(ubicacion=new Position(x=1, y=1), produccion="alfajores")
+ const ciudadAzafran = new Ciudad(ubicacion=new Position(x=5, y=5), produccion="azafran")
+ const pepita = new Ave(energia=2, ciudad=puebloPaleta)
+ 
+ assert.throwsExceptionWithMessage("No tengo energia suficiente para volar", { pepita.volarA(ciudadAzafran) })
+ assert.equals(2, pepita.energia())
+ assert.equals(puebloPaleta, pepita.ciudad())
+}
+
+test "un ave puede tomar un producto en una ciudad y llevarlo a otro cubriendo una necesidad de este" {
+ const ciudadCeleste = new Ciudad(ubicacion=new Position(x=0, y=1), produccion="yerba")
+ ciudadCeleste.necesitar("alfajores")
+ const puebloPaleta = new Ciudad(ubicacion=new Position(x=1, y=1), produccion="alfajores")
+ const pepita = new Ave(energia=2, ciudad=puebloPaleta)
+ 
+ pepita.transportarA(ciudadCeleste)
+ 
+ assert.that(ciudadCeleste.satisfecha())
+ assert.equals(ciudadCeleste, pepita.ciudad())
+}
+
+test "un ave no puede llevar un producto a una ciudad para la cual no le alcanza la energia para viajar" {
+ const ciudadAzafran = new Ciudad(ubicacion=new Position(x=5, y=5), produccion="azafran")
+ ciudadAzafran.necesitar("alfajores")
+ const puebloPaleta = new Ciudad(ubicacion=new Position(x=1, y=1), produccion="alfajores")
+ const pepita = new Ave(energia=2, ciudad=puebloPaleta)
+ 
+ assert.throwsExceptionWithMessage("No tengo energia suficiente para volar", { pepita.transportarA(ciudadAzafran) })
+ assert.notThat(ciudadAzafran.satisfecha())
+ assert.equals(puebloPaleta, pepita.ciudad())
+}
+
+test "cuando un ave descansa recupera 20 de energia" {
+  const puebloPaleta = new Ciudad(ubicacion=new Position(x=1, y=1), produccion="alfajores")
+  const pepita = new Ave(energia=2, ciudad=puebloPaleta)
+  
+  pepita.descansar()
+  
+  assert.equals(22, pepita.energia())
+}
+
+test "hacer descansar a una bandada de aves hace descansar a cada ave que la forma" {
+  const puebloPaleta = new Ciudad(ubicacion=new Position(x=1, y=1), produccion="alfajores")
+  const pepita = new Ave(energia=2, ciudad=puebloPaleta)
+  const josefa = new Ave(energia=5, ciudad=puebloPaleta)
+  const bandada = new Bandada(aves=[pepita, josefa])
+  
+  bandada.descansar()
+  
+  assert.equals(22, pepita.energia())
+  assert.equals(25, josefa.energia())
+}
+
+test "hacer viajar a una bandada hace viajar a cada ave al destino" {
+  const puebloPaleta = new Ciudad(ubicacion=new Position(x=1, y=1), produccion="alfajores")
+  const ciudadCeleste = new Ciudad(ubicacion=new Position(x=0, y=1), produccion="yerba")
+  const ciudadVerde = new Ciudad(ubicacion=new Position(x=1, y=2), produccion="menta")
+  const pepita = new Ave(energia=2, ciudad=ciudadVerde)
+  const josefa = new Ave(energia=3, ciudad=ciudadCeleste)
+  const bandada = new Bandada(aves=[pepita, josefa])
+  
+  bandada.volarA(puebloPaleta)
+  
+  assert.equals(1, pepita.energia())
+  assert.equals(2, josefa.energia())
+  assert.equals(puebloPaleta, pepita.ciudad())
+  assert.equals(puebloPaleta, josefa.ciudad())
+}
+
+test "hacer viajar a una bandada cuando una de sus aves no tiene suficiente energia falla y ningun ave vuela" {
+  const puebloPaleta = new Ciudad(ubicacion=new Position(x=1, y=1), produccion="alfajores")
+  const ciudadCeleste = new Ciudad(ubicacion=new Position(x=0, y=1), produccion="yerba")
+  const ciudadVerde = new Ciudad(ubicacion=new Position(x=1, y=2), produccion="menta")
+  const pepita = new Ave(energia=2, ciudad=ciudadVerde)
+  const josefa = new Ave(energia=0, ciudad=ciudadCeleste)
+  const bandada = new Bandada(aves=[pepita, josefa])
+  
+  assert.throwsExceptionWithMessage("No tengo energia suficiente para volar", { bandada.volarA(puebloPaleta) } )
+  
+  assert.equals(2, pepita.energia())
+  assert.equals(0, josefa.energia())
+  assert.equals(ciudadVerde, pepita.ciudad())
+  assert.equals(ciudadCeleste, josefa.ciudad())
+}
+
+test "hacer transportar a una bandada cuando una de sus aves no tiene suficiente energia falla y ningun ave vuela" {
+  const puebloPaleta = new Ciudad(ubicacion=new Position(x=1, y=1), produccion="alfajores")
+  const ciudadCeleste = new Ciudad(ubicacion=new Position(x=0, y=1), produccion="yerba")
+  const ciudadVerde = new Ciudad(ubicacion=new Position(x=1, y=2), produccion="menta")
+  const pepita = new Ave(energia=2, ciudad=ciudadVerde)
+  const josefa = new Ave(energia=0, ciudad=ciudadCeleste)
+  const bandada = new Bandada(aves=[pepita, josefa])
+  puebloPaleta.necesitar("yerba")
+  
+  assert.throwsExceptionWithMessage("No tengo energia suficiente para volar", { bandada.transportarA(puebloPaleta) } )
+  
+  assert.notThat(puebloPaleta.satisfecha())
+  assert.equals(ciudadVerde, pepita.ciudad())
+  assert.equals(ciudadCeleste, josefa.ciudad())
+}
+
+test "hacer transportar a una bandada hace que las aves lleven los productos de las ciudades en las que estaban" {
+  const puebloPaleta = new Ciudad(ubicacion=new Position(x=1, y=1), produccion="alfajores")
+  const ciudadCeleste = new Ciudad(ubicacion=new Position(x=0, y=1), produccion="yerba")
+  const ciudadVerde = new Ciudad(ubicacion=new Position(x=1, y=2), produccion="menta")
+  const pepita = new Ave(energia=2, ciudad=ciudadVerde)
+  const josefa = new Ave(energia=2, ciudad=ciudadCeleste)
+  const bandada = new Bandada(aves=[pepita, josefa])
+  puebloPaleta.necesitar("yerba")
+  puebloPaleta.necesitar("menta")
+  
+  bandada.transportarA(puebloPaleta)
+  
+  assert.that(puebloPaleta.satisfecha())
+  assert.equals(puebloPaleta, josefa.ciudad())
+  assert.equals(puebloPaleta, pepita.ciudad())
+}

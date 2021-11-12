@@ -1,0 +1,71 @@
+import wollok.game.*
+import ciudad.*
+import ave.*
+
+object map {
+	method image() = "kantoMap.png"
+}
+
+class AveVisual {
+	const ave
+	method position() = new Position(x=ave.ciudad().ubicacion().x() * 5, y=ave.ciudad().ubicacion().y() * 5) 
+	method image() = "taillow.png"
+	method ciudad() = ave.ciudad()
+	method volarA(otraCiudad) {
+		ave.volarA(otraCiudad)
+	}
+	method descansar() {
+		ave.descansar()
+		game.say(self, "zzz")
+	}
+	method decimeTuEnergia() {
+		game.say(self, "Tengo " + ave.energia().toString() + " de energia")
+	}
+}
+
+object juego {
+	const puebloPaleta = new Ciudad(ubicacion=game.at(1, 2), produccion="alfajores")
+	const ciudadCeleste = new Ciudad(ubicacion=game.at(5, 6), produccion="yerba")
+	const taillow = new AveVisual(ave=new Ave(energia=20, ciudad=puebloPaleta))
+	const ciudades = [puebloPaleta, ciudadCeleste]
+	
+	method configurarTablero() {
+		game.cellSize(10)
+		game.width(50)
+		game.height(40)
+	}
+	method configurarMapa() {
+		game.addVisualIn(map, game.origin())
+	}
+	method configurarPersonaje() {
+		game.addVisual(taillow)
+	}
+	method configurarTeclas() {
+		keyboard.x().onPressDo {
+			const ciudadEnLaQueNoEsta = ciudades.find { unaCiudad => unaCiudad != taillow.ciudad() }
+			taillow.volarA(ciudadEnLaQueNoEsta)
+		}
+		
+		keyboard.z().onPressDo {
+			taillow.descansar()
+		}
+		keyboard.c().onPressDo {
+			taillow.decimeTuEnergia()
+		}
+	}
+	method configurar() {
+		self.configurarTablero()
+		self.configurarMapa()
+		self.configurarPersonaje()
+		self.configurarTeclas()
+	}
+	
+	method jugar() {
+		self.configurar()
+		game.start()
+	}
+}
+
+program avesMensajerasGame {
+	juego.jugar()
+}
