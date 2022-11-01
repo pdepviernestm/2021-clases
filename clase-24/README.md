@@ -2,8 +2,7 @@
 
 ## Material de la clase
 
-- Clase grabada: _**Proximamente**_
-- Slides: https://docs.google.com/presentation/d/1ZUrxeLBU6v7MK6rad-b6-_pUIwNsjxjuvBvRwl9URYc/edit?usp=sharing
+- Slides: https://docs.google.com/presentation/d/1tG-6-Xs-5Wkenr8AwE9t1qkZyg0SC3xoed8JR8iyk1c/edit?usp=sharing
 - Código: Acá.
 
 ## ¿Qué mas puedo leer, ver o practicar?
